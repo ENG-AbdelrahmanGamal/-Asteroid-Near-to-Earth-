@@ -8,15 +8,12 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.udacity.asteroidradar.R
-import com.udacity.asteroidradar.database.Asteroid
 import com.udacity.asteroidradar.database.AsteroidDatabase
 import com.udacity.asteroidradar.databinding.FragmentMainBinding
 
 class MainFragment : Fragment() {
 
-    private val viewModel: MainViewModel by lazy {
-        ViewModelProvider(this).get(MainViewModel::class.java)
-    }
+    private lateinit var viewModel: MainViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,14 +21,11 @@ class MainFragment : Fragment() {
     ): View? {
         val binding = FragmentMainBinding.inflate(inflater)
         setHasOptionsMenu(true)
-//        val application = requireNotNull(this.activity).application
-//        val dataSource = AsteroidDatabase.getInstance(application).asteroidDao
-//        val viewModelFactory=MainViewModelFactory(dataSource,application)
-
-
-
+        val application = requireNotNull(this.activity).application
+        val dataSource = AsteroidDatabase.getInstance(application).asteroidDao
+        val viewModelFactory=MainViewModelFactory(dataSource,application)
+        viewModel=ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
         binding.lifecycleOwner = this
-
         binding.viewModel = viewModel
 
         val adaptor =AsteroidAdapter(OnClickListener {it->
@@ -47,15 +41,12 @@ class MainFragment : Fragment() {
                 viewModel.asteroidOnClickNavigate()
             }
         })
-
         return binding.root
     }
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.main_overflow_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return true
     }
