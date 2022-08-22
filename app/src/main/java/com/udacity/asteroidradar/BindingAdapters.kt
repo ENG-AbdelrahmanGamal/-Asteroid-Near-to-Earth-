@@ -29,7 +29,7 @@ fun bindTextViewToAstronomicalUnit(textView: TextView, number: Double) {
 }
 
 @BindingAdapter("kmUnitText")
-fun bindTextViewToKmUnit(textView: TextView, number: Double) {
+    fun bindTextViewToKmUnit(textView: TextView, number: Double) {
     val context = textView.context
     textView.text = String.format(context.getString(R.string.km_unit_format), number)
 }
@@ -38,4 +38,9 @@ fun bindTextViewToKmUnit(textView: TextView, number: Double) {
 fun bindTextViewToDisplayVelocity(textView: TextView, number: Double) {
     val context = textView.context
     textView.text = String.format(context.getString(R.string.km_s_unit_format), number)
+}
+@BindingAdapter("picture_of_day")
+fun bindImageToDisplayPictureOfDay(imageView: ImageView,pictureOfDay: PictureOfDay)
+{
+    
 }

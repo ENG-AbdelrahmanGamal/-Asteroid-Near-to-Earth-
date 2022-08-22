@@ -8,42 +8,61 @@ import androidx.recyclerview.widget.RecyclerView
 import com.udacity.asteroidradar.database.Asteroid
 import com.udacity.asteroidradar.databinding.ItemListAsteroidBinding
 
-class AsteroidAdapter (val onClickListener: OnClickListener) : ListAdapter<Asteroid, AsteroidAdapter.AsteroidViewHolder>(DiffCallback) {
+class AsteroidAdapter (val onClickListener: OnClickListener) : ListAdapter<Asteroid, AsteroidAdapter.AsteroidViewHolder>
+    (AsteroidUtilDiffCallBack()) {
 
 
-    class AsteroidViewHolder(private var binding:ItemListAsteroidBinding)
-        : RecyclerView.ViewHolder(binding.root) {
-        fun bind(asteroid: Asteroid) {
-         //  binding.viewModel = asteroid
-            binding.executePendingBindings()
-        }
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AsteroidViewHolder {
-        return AsteroidViewHolder(ItemListAsteroidBinding.inflate(LayoutInflater
-            .from(parent.context)))
+        val binding :ItemListAsteroidBinding= ItemListAsteroidBinding.inflate(LayoutInflater.from(parent.context))
+        return AsteroidViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: AsteroidViewHolder, position: Int) {
+        holder.bind(getItem(position)!!,onClickListener)
         val asteroid = getItem(position)
-        holder.bind(asteroid)
-        holder.itemView.setOnClickListener { onClickListener.onclick(asteroid) }
-        // onClickListener.onclick(marsProperty)
+        holder.also {
+            it.bind(asteroid, onClickListener)
+        }
     }
 
 
 
 
-    companion object DiffCallback : DiffUtil.ItemCallback<Asteroid>() {
+    class AsteroidViewHolder(val binding:ItemListAsteroidBinding)
+        : RecyclerView.ViewHolder(binding.root) {
+
+
+        fun bind(asteroid: Asteroid, onClickListener: OnClickListener) {
+              binding.asteroid = asteroid
+           binding.listener=onClickListener
+            binding.executePendingBindings()
+        }
+
+        fun from_Astro(parent: ViewGroup): AsteroidAdapter.AsteroidViewHolder {
+            val layoutInflate= LayoutInflater.from(parent.context)
+            val binding=ItemListAsteroidBinding.inflate(layoutInflate,parent,false)
+            return AsteroidAdapter.AsteroidViewHolder(binding)
+
+        }
+
+
+        }
+    }
+    class AsteroidUtilDiffCallBack:DiffUtil.ItemCallback<Asteroid>(){
         override fun areItemsTheSame(oldItem: Asteroid, newItem: Asteroid): Boolean {
             return oldItem == newItem
         }
 
         override fun areContentsTheSame(oldItem: Asteroid, newItem: Asteroid): Boolean {
             return oldItem.id == newItem.id
+
         }
 
+
+
     }
+
 
     class OnClickListener(val clickListener: (asteroid: Asteroid) ->Unit) {
         fun onclick(asteroid: Asteroid) = clickListener(asteroid)
@@ -51,6 +70,7 @@ class AsteroidAdapter (val onClickListener: OnClickListener) : ListAdapter<Aster
 
 
 
-}
+
+
 
 

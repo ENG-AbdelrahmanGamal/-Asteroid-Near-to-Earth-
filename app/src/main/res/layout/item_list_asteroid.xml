@@ -1,15 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 <variable
-    name="viewModel"
-    type="com.udacity.asteroidradar.main.MainViewModel" />
+    name="asteroid"
+    type="com.udacity.asteroidradar.database.Asteroid" />
+        <variable
+            name="listener"
+            type="com.udacity.asteroidradar.main.OnClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:onClick="@{()->listener.onclick(asteroid)}"
+        >
+        <TextView
+            android:id="@+id/item_edit_title"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{asteroid.codename}"
+            android:hint="test asteroid"
+            android:textSize="16sp"
+
+            />
+        <TextView
+            android:id="@+id/item_edit_date"
+            app:layout_constraintTop_toBottomOf="@+id/item_edit_title"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="13-10-1999"
+            android:textSize="16sp"
+             android:text="@{asteroid.closeApproachDate}"
+
+            />
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:layout_constraintTop_toTopOf="@+id/item_edit_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:statusIcon="@{asteroid.potentiallyHazardous}"
+            android:src="@drawable/ic_help_circle"
+            app:layout_constraintBottom_toBottomOf="@+id/item_edit_date"/>
+<!--              app:asteroidStatusImage="@{asteroid.}"-->
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
