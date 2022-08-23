@@ -1,5 +1,6 @@
 package com.udacity.asteroidradar
 
+import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.net.toUri
@@ -42,16 +43,14 @@ fun bindTextViewToDisplayVelocity(textView: TextView, number: Double) {
     textView.text = String.format(context.getString(R.string.km_s_unit_format), number)
 }
 @BindingAdapter("picture_of_day")
-fun bindImageToDisplayPictureOfDay(imageView: ImageView,pictureOfDay: String)
+fun bindImageToDisplayPictureOfDay(imageView: ImageView,pictureOfDay: String?)
 {
-    pictureOfDay.let {
-        val image=it.toUri().buildUpon().scheme("https").build()
         Picasso.get()
-            .load(image)
-            .resize(50, 50)
-            .centerCrop()
+            .load(pictureOfDay)
+        //    .centerCrop()
             .placeholder(R.drawable.placeholder_picture_of_day)
             .error(R.drawable.ic_launcher_background)
             .into(imageView)
-    }
+    Log.d("TAG", "bindImageToDisplayPictureOfDay: $pictureOfDay")
+
 }

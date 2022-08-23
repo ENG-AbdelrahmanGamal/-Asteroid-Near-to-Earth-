@@ -7,7 +7,7 @@ import androidx.room.*
 interface AsteroidDao {
 
     @Insert
-   suspend  fun insert(asteroid: Asteroid)
+   suspend  fun insert(asteroid: Array<Asteroid>)
 
     @Update
     suspend fun update(asteroid:Asteroid )

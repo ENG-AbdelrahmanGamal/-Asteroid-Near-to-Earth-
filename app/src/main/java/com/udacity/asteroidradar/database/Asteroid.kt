@@ -14,4 +14,20 @@ data class Asteroid(
     val closeApproachDate: String,
                     val absoluteMagnitude: Double, val estimatedDiameter: Double,
                     val relativeVelocity: Double, val distanceFromEarth: Double,
-                    val isPotentiallyHazardous: Boolean) : Parcelable
+                    val isPotentiallyHazardous: Boolean) : Parcelable {
+    fun forEachIndex(any: Any) {
+
+    }
+}
+
+
+//fun List<AsteroidDatabase>.asDomainModel(): List<Asteroid> {
+//    return map {
+//        Asteroid(
+//            codename = it.codename,
+//            title = it.title,
+//            description = it.description,
+//            updated = it.updated,
+//            thumbnail = it.thumbnail)
+//    }
+//}

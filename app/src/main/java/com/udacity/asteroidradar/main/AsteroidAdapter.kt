@@ -14,7 +14,7 @@ class AsteroidAdapter (val onClickListener: OnClickListener) : ListAdapter<Aster
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AsteroidViewHolder {
-        val binding :ItemListAsteroidBinding= ItemListAsteroidBinding.inflate(LayoutInflater.from(parent.context))
+        val binding :ItemListAsteroidBinding= ItemListAsteroidBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return AsteroidViewHolder(binding)
     }
 
@@ -25,8 +25,6 @@ class AsteroidAdapter (val onClickListener: OnClickListener) : ListAdapter<Aster
             it.bind(asteroid, onClickListener)
         }
     }
-
-
 
 
     class AsteroidViewHolder(val binding:ItemListAsteroidBinding)
