@@ -24,9 +24,10 @@
             android:layout_height="wrap_content"
             android:text="@{asteroid.codename}"
             android:textColor="#fff"
+            android:padding="10dp"
             android:hint="test asteroid"
-            android:textSize="16sp"
-
+            android:textSize="18sp"
+              android:textStyle="bold"
             />
         <TextView
             android:id="@+id/item_edit_date"
@@ -35,7 +36,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="13-10-1999"
-            android:textColor="#fff"
+            android:textColor="#4CAF50"
+            android:paddingStart="10dp"
             android:textSize="16sp"
              android:text="@{asteroid.closeApproachDate}"
 

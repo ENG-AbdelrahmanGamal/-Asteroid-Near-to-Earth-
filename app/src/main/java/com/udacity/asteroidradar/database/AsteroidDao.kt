@@ -6,7 +6,7 @@ import androidx.room.*
 @Dao
 interface AsteroidDao {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
    suspend  fun insert(asteroid: Array<Asteroid>)
 
     @Update
@@ -17,5 +17,9 @@ interface AsteroidDao {
 
     @Query("SELECT * FROM Asteroid ")
     fun getAllAsteroid():LiveData<List<Asteroid>>
+
+
+    @Query("SELECT * FROM Asteroid where closeApproachDate=:key")
+    fun getTodayAsteroid(key:String):LiveData<List<Asteroid>>
 
 }

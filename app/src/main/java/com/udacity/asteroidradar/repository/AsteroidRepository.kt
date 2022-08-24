@@ -22,24 +22,31 @@ import org.json.JSONObject
 import java.util.*
 
 
-
 // repository for fetch asteroid from network
 @RequiresApi(Build.VERSION_CODES.N)
-class AsteroidRepository (private val roomDatabase:AsteroidDatabase) {
-//   val aster: LiveData<List<Asteroid>> = Transformations.map(roomDatabase.asteroidDao.getAllAsteroid()) {
-//        it.asDomainModel()
-//    }
+class AsteroidRepository(private val roomDatabase: AsteroidDatabase) {
 
 
-    val aster: LiveData<List<Asteroid>> =roomDatabase.asteroidDao.getAllAsteroid()
-   suspend fun refreshAsteroid() {
-            withContext(Dispatchers.IO) {
-                val asList = parseAsteroidsJsonResult(
-                    JSONObject( Network.retrofitService .getAster(Constants.MY_KEY,
-                    getNextSevenDaysFormattedDates().get(0), getNextSevenDaysFormattedDates().get(6)).await()))
-                roomDatabase.asteroidDao.insert(*asList.toTypedArray() )
+    val asteroids: LiveData<List<Asteroid>> = roomDatabase.asteroidDao.getAllAsteroid()
+    val todayAsteroid: LiveData<List<Asteroid>> = roomDatabase.asteroidDao.getTodayAsteroid(
+        getNextSevenDaysFormattedDates().get(0)
+    )
+
+    suspend fun refreshAsteroid() {
+        withContext(Dispatchers.IO) {
+            val asList = parseAsteroidsJsonResult(
+                JSONObject(
+                    Network.retrofitService.getAster(
+                        Constants.MY_KEY,
+                        getNextSevenDaysFormattedDates().get(0),
+                        getNextSevenDaysFormattedDates().get(6)
+                    ).await()
+                )
+            )
+            roomDatabase.asteroidDao.insert(*asList.toTypedArray())
         }
-   }
+    }
+
 
 }
 

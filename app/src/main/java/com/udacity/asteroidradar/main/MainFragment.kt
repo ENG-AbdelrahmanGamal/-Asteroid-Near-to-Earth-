@@ -18,15 +18,16 @@ import com.udacity.asteroidradar.databinding.FragmentMainBinding
 class MainFragment : Fragment() {
 
     private lateinit var viewModel: MainViewModel
-    private  val TAG = "MainFragment"
+    private val TAG = "MainFragment"
+    private lateinit var adaptor :AsteroidAdapter
+   private lateinit var binding:FragmentMainBinding
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = FragmentMainBinding.inflate(inflater)
+         binding = FragmentMainBinding.inflate(inflater)
         setHasOptionsMenu(true)
-        val astroid:Asteroid
         val application = requireNotNull(this.activity).application
         val dataSource = AsteroidDatabase.getInstance(application).asteroidDao
         val viewModelFactory = MainViewModelFactory(dataSource, application)
@@ -34,25 +35,22 @@ class MainFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-        val adaptor = AsteroidAdapter(OnClickListener { it ->
-            Toast.makeText(context, "on click gone", Toast.LENGTH_LONG).show()
-            viewModel.asteroidOnClick(it.id)
+
+         adaptor = AsteroidAdapter(OnClickListener { it ->
+            this.findNavController().navigate(MainFragmentDirections.actionShowDetail(it))
+
         })
         binding.asteroidRecycler.adapter = adaptor
 
-viewModel.astroidList.observe(viewLifecycleOwner,  Observer {
-    it?.let { adaptor.submitList(it )
-        Log.d(TAG, ": ${it}")
+        viewModel.astroidList.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                adaptor.submitList(it)
+                Log.d(TAG, ": ${it}")
 
-    }
-})
-
-        viewModel.navigate.observe(viewLifecycleOwner, Observer { aster ->
-            aster?.let {
-                this.findNavController().navigate(R.id.detailFragment)
-                viewModel.asteroidOnClickNavigate()
             }
         })
+
+
         return binding.root
     }
 
@@ -61,7 +59,51 @@ viewModel.astroidList.observe(viewLifecycleOwner,  Observer {
         super.onCreateOptionsMenu(menu, inflater)
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return true
+
+        return when (item.itemId) {
+            R.id.show_all_menu -> {
+                adapteWeekAsteroids()
+                return true
+
+            }
+            R.id.show_rent_menu -> {
+                adapteTodayAsteroids()
+                return true
+
+            }
+            R.id.show_buy_menu -> {
+                Toast.makeText(requireContext(),"Soon as you see  will create a List of Asteroids",Toast.LENGTH_LONG).show()
+                return true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    private fun adapteWeekAsteroids() {
+        Toast.makeText(requireContext(), "item one ", Toast.LENGTH_LONG).show()
+        viewModel.astroidList.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                adaptor.submitList(it)
+                Log.d(TAG, ": ${it}")
+
+            }
+        })
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    private fun adapteTodayAsteroids() {
+        binding.asteroidRecycler.adapter = adaptor
+
+        viewModel.todayAsteroid.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                adaptor.submitList(it)
+                Log.d(TAG, ": ${it}")
+
+            }
+        })
     }
 }
