@@ -11,11 +11,15 @@ import com.squareup.picasso.Picasso
 fun bindAsteroidStatusImage(imageView: ImageView, isHazardous: Boolean) {
     if (isHazardous) {
         imageView.setImageResource(R.drawable.ic_status_potentially_hazardous)
-        imageView.contentDescription="@string/potentially_hazardous_asteroid_image"
+       // imageView.contentDescription="@string/potentially_hazardous_asteroid_image"
+        //SUGGESTION by Reviewer
+        imageView.contentDescription=imageView.context.getString(R.string.potentially_hazardous_asteroid_image)
 
     } else {
         imageView.setImageResource(R.drawable.ic_status_normal)
-        imageView.contentDescription="@string/not_hazardous_asteroid_image"
+      //  imageView.contentDescription="@string/not_hazardous_asteroid_image"
+        //SUGGESTION by Reviewer
+        imageView.contentDescription=imageView.context.getString(R.string.not_hazardous_asteroid_image)
 
     }
 }
@@ -24,10 +28,16 @@ fun bindAsteroidStatusImage(imageView: ImageView, isHazardous: Boolean) {
 fun bindDetailsStatusImage(imageView: ImageView, isHazardous: Boolean) {
     if (isHazardous) {
         imageView.setImageResource(R.drawable.asteroid_hazardous)
-        imageView.contentDescription="@string/potentially_hazardous_asteroid_image"
+       // imageView.contentDescription="@string/potentially_hazardous_asteroid_image"
+        //SUGGESTION by Reviewer
+        imageView.contentDescription=imageView.context.getString(R.string.potentially_hazardous_asteroid_image)
+
     } else {
         imageView.setImageResource(R.drawable.asteroid_safe)
-        imageView.contentDescription="@string/not_hazardous_asteroid_image"
+       // imageView.contentDescription="@string/not_hazardous_asteroid_image"
+        // SUGGESTION by Reviewer
+        imageView.contentDescription=imageView.context.getString(R.string.not_hazardous_asteroid_image)
+
 
     }
 }
@@ -53,7 +63,6 @@ fun bindImageToDisplayPictureOfDay(imageView: ImageView,pictureOfDay: String?)
 {
         Picasso.get()
             .load(pictureOfDay)
-        //    .centerCrop()
             .placeholder(R.drawable.placeholder_picture_of_day)
             .error(R.drawable.ic_launcher_background)
             .into(imageView)

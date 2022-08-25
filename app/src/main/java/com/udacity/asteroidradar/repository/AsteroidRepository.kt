@@ -7,6 +7,7 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import androidx.room.RoomDatabase
+import com.udacity.asteroidradar.BuildConfig.NASA_API_KEY
 import com.udacity.asteroidradar.Constants
 import com.udacity.asteroidradar.api.getNextSevenDaysFormattedDates
 import com.udacity.asteroidradar.api.parseAsteroidsJsonResult
@@ -37,7 +38,7 @@ class AsteroidRepository(private val roomDatabase: AsteroidDatabase) {
             val asList = parseAsteroidsJsonResult(
                 JSONObject(
                     Network.retrofitService.getAster(
-                        Constants.MY_KEY,
+                        NASA_API_KEY,
                         getNextSevenDaysFormattedDates().get(0),
                         getNextSevenDaysFormattedDates().get(6)
                     ).await()

@@ -12,8 +12,8 @@ interface AsteroidDao {
     @Update
     suspend fun update(asteroid:Asteroid )
 
-    @Query("DELETE FROM Asteroid")
-  suspend   fun clear()
+    @Query("DELETE FROM Asteroid where closeApproachDate<:today")
+  suspend   fun clear(today:String)
 
     @Query("SELECT * FROM Asteroid ")
     fun getAllAsteroid():LiveData<List<Asteroid>>

@@ -7,6 +7,7 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.udacity.asteroidradar.BuildConfig.NASA_API_KEY
 import com.udacity.asteroidradar.Constants
 import com.udacity.asteroidradar.PictureOfDay
 import com.udacity.asteroidradar.database.AsteroidDao
@@ -56,7 +57,7 @@ class MainViewModel(val database: AsteroidDao, application: Application) :
     }
 
     private suspend fun getImage(): PictureOfDay? {
-        val deferredValue = Pic.retrofit.getPicture(Constants.MY_KEY)
+        val deferredValue = Pic.retrofit.getPicture(NASA_API_KEY)
         val result = deferredValue.await()
         Log.d(TAG, "getImage: $result")
         return result

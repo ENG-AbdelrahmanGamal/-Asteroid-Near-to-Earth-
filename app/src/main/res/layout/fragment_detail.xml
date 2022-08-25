@@ -20,6 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
+            android:contentDescription="@string/potentially_hazardous_asteroid_image"
             app:asteroidStatusImage="@{asteroid.potentiallyHazardous}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -93,10 +94,10 @@
                         android:id="@+id/help_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:contentDescription="@string/potentially_hazardous_asteroid_image"
                         android:padding="16dp"
-                       app:statusIcon="@{asteroid.potentiallyHazardous}"
-
-                        app:srcCompat="@drawable/ic_help_circle" />
+                        app:srcCompat="@drawable/ic_help_circle"
+                        app:statusIcon="@{asteroid.potentiallyHazardous}" />
 
                 </LinearLayout>
 
